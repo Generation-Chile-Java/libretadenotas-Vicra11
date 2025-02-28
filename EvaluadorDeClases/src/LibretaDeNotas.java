@@ -1,11 +1,78 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class LibretaDeNotas {
 
-    Map<String, ArrayList<>> EquipoPokemon = new HashMap<>();
+    public static void main(String[] args) {
 
+        HashMap<String, ArrayList<Double>> libroNotas = new HashMap<>();
+
+        int numNotas = 0;
+        int numEstudiantes;
+
+        Scanner sc = new Scanner(System.in);
+
+
+        System.out.println("cuantos estudiantes son?: ");
+        numEstudiantes = sc.nextInt();
+
+        System.out.println("cuantas notas?: ");
+        numNotas = sc.nextInt();
+
+        for (int i = 1; i <= numEstudiantes;  i++) {
+
+            System.out.println("Estudiante " + i + ": ");
+            String nombre = sc.next();
+
+            ArrayList<Double> notas = new ArrayList<>();
+
+            for (int j = 1 ; j <= numNotas ; j++) {
+
+                System.out.println("Nota " + j + ": ");
+                notas.add(sc.nextDouble());
+
+            }
+
+            libroNotas.put(nombre, notas);
+
+        }
+
+        System.out.println(libroNotas);
+
+        for (Map.Entry<String, ArrayList<Double>> entry : libroNotas.entrySet()) {
+
+            double NotaMax = Double.MIN_VALUE;
+            double NotaMin = Double.MAX_VALUE;
+            double NotaSum = 0;
+            double NotaProm = 0;
+
+            ArrayList<Double> notas = entry.getValue();
+            for (Double nota : notas) {
+
+                if (nota > NotaMax) {
+
+                    NotaMax = nota;
+                }
+
+                if (nota < NotaMin) {
+
+                    NotaMin = nota;
+
+                }
+
+                NotaSum += nota;
+
+            }
+
+            NotaProm = NotaSum/numNotas;
+
+            System.out.println("El estudiante tiene:" + entry.getKey() +"\n Nota Maxima: " + NotaMax + "\n Nota Minima: " + NotaMin + "\n Promedio: " + NotaProm);
+        }
+
+
+    }
 }
 
 
