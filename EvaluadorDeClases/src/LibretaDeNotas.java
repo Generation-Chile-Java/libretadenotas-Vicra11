@@ -2,18 +2,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 public class LibretaDeNotas {
 
-    public static void main(String[] args) {
 
-        HashMap<String, ArrayList<Double>> libroNotas = new HashMap<>();
+    public static int numNotas = 0;
+    public static int numEstudiantes = 0;
+    public static HashMap<String, ArrayList<Double>> libroNotas = new HashMap<>();
 
-        int numNotas = 0;
-        int numEstudiantes;
+    public static void IngresoDatos (){
 
         Scanner sc = new Scanner(System.in);
-
 
         System.out.println("cuantos estudiantes son?: ");
         numEstudiantes = sc.nextInt();
@@ -32,7 +30,6 @@ public class LibretaDeNotas {
 
                 System.out.println("Nota " + j + ": ");
                 notas.add(sc.nextDouble());
-
             }
 
             libroNotas.put(nombre, notas);
@@ -41,39 +38,183 @@ public class LibretaDeNotas {
 
         System.out.println(libroNotas);
 
-        for (Map.Entry<String, ArrayList<Double>> entry : libroNotas.entrySet()) {
+    }
 
-            double NotaMax = Double.MIN_VALUE;
-            double NotaMin = Double.MAX_VALUE;
-            double NotaSum = 0;
-            double NotaProm = 0;
+    public static void main(String[] args) {
 
-            ArrayList<Double> notas = entry.getValue();
-            for (Double nota : notas) {
+        IngresoDatos();
 
-                if (nota > NotaMax) {
+    }
 
-                    NotaMax = nota;
-                }
 
-                if (nota < NotaMin) {
+    /// asumimos que exsiste el alumno antes
+    public static Double ObtenerMax (HashMap<String, ArrayList<Double>> libroNotas, String nombre) {
 
-                    NotaMin = nota;
+        double NotaMax = Double.MIN_VALUE;
 
-                }
+        ArrayList<Double> notas = libroNotas.get(nombre);
 
-                NotaSum += nota;
+        for (Double nota : notas) {
+            if (nota > NotaMax) {
+                NotaMax = nota;
+            }
+
+        }
+
+        return NotaMax;
+
+    }
+
+    public static Double ObtenerMin (HashMap<String, ArrayList<Double>> libroNotas, String nombre) {
+
+
+        double NotaMin = Double.MAX_VALUE;
+
+        ArrayList<Double> notas = libroNotas.get(nombre);
+
+        for (Double nota : notas) {
+            if (nota > NotaMin) {
+                NotaMin = nota;
+            }
+
+        }
+
+        return NotaMin;
+
+    }
+
+
+    public static Double PromedioCurso (HashMap<String, ArrayList<Double>> libroNotas) {
+
+        double SumNotasTotal = 0;
+        double PromCurso = 0;
+        for (HashMap.Entry<String, ArrayList<Double>> entry : libroNotas.entrySet()) {
+
+            ArrayList<Double> notasEstudiante = entry.getValue();
+
+            for (Double nota : notasEstudiante) {
+
+                SumNotasTotal += nota;
 
             }
 
-            NotaProm = NotaSum/numNotas;
 
-            System.out.println("El estudiante tiene:" + entry.getKey() +"\n Nota Maxima: " + NotaMax + "\n Nota Minima: " + NotaMin + "\n Promedio: " + NotaProm);
+        }
+
+        PromCurso = SumNotasTotal/(numNotas*numEstudiantes);
+
+        return PromCurso;
+    }
+
+    public static Double PromedioEstudiante (HashMap<String, ArrayList<Double>> libroNotas, String nombre) {
+
+        double SumNotasE = 0;
+        double PromEstudiante = 0;
+
+        ArrayList<Double> notasEstudiante = libroNotas.get(nombre);
+
+        for (Double nota : notasEstudiante) {
+
+            SumNotasE += nota;
+
+
+        }
+
+        PromEstudiante = SumNotasE/(numNotas);
+
+        return PromEstudiante;
+
+    }
+
+    public static void Opcion1 () {
+        boolean MenuActivo = true;
+
+        while (MenuActivo) {
+
+
+            String nomEstudiante = "";
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Ingrese el nombre del estudiante: ");
+            nomEstudiante = sc.nextLine();
+
+            if (libroNotas.containsKey(nomEstudiante)) {
+
+
+                MenuActivo = false;
+
+            }else{
+
+                System.out.println("Estudiante no encontrado");
+
+            }
+
         }
 
 
     }
+
+
+    public static void Opcion2 () {
+
+    }
+
+
+    public static void Opcion3 () {
+
+    }
+
+    public static void Opcion4 () {
+
+        int opcion = -1;
+        boolean MenuActivo = true;
+        Scanner sc = new Scanner(System.in);
+
+
+        while (MenuActivo) {
+
+            System.out.println("Seleccione una opcion");
+            System.out.println("1. Mostrar promedio estudiante");
+            System.out.println("2. Mostrar notas aprobada y reprobada");
+            System.out.println("3. comparar notas con promedio curso");
+            System.out.println("4. Salir");
+
+            opcion = sc.nextInt();
+
+            switch (opcion) {
+
+                case 1:
+
+
+
+                    break;
+                case 2:
+
+
+                    break;
+                case 3:
+
+
+                    break;
+                case 4:
+
+                    MenuActivo = false;
+
+                    break;
+                default : System.out.println("Opcion no valida");
+
+
+                break;
+            }
+
+        }
+
+    }
+
+
+
 }
+
 
 
 /*
